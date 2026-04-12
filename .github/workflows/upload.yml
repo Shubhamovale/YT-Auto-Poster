@@ -1,0 +1,37 @@
+name: YouTube Auto Poster
+
+on:
+  schedule:
+    # Based on IST (UTC+05:30) schedule: 11 PM, 2 AM, 3 AM
+    # 11:00 PM IST = 17:30 UTC
+    # 02:00 AM IST = 20:30 UTC
+    # 03:00 AM IST = 21:30 UTC
+    - cron: '30 17 * * *'
+    - cron: '30 20 * * *'
+    - cron: '30 21 * * *'
+  workflow_dispatch: # Allows manual trigger from the Actions tab for testing
+
+jobs:
+  upload-video:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip' # cache pip dependencies
+          
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run Auto Poster
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+        run: python main.py
