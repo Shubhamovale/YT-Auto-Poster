@@ -2,9 +2,9 @@ name: YouTube Auto Poster
 
 on:
   schedule:
-    # Based on IST (UTC+05:30) schedule: 11 PM
-    # 11:00 PM IST = 17:30 UTC
-    - cron: '30 17 * * *'
+    # Based on IST (UTC+05:30) schedule: 2 AM
+    # 02:00 AM IST = 20:30 UTC
+    - cron: '30 20 * * *'
   workflow_dispatch: # Allows manual trigger from the Actions tab for testing
 
 jobs:
